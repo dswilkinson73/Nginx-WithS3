@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Initialise') {
             steps {
-		      sh "rm -rf ${PROJECT_NAME}"
+		      sh "rm -rf ${PROJECT_NAME} "
               	      sh "git clone https://github.com/dswilkinson73/${PROJECT_NAME}.git"
 		      echo "Initialising job - cloning ${PROJECT_NAME} repository"
                       dir("${PROJECT_NAME}") {
