@@ -16,6 +16,8 @@ pipeline {
                   }
             }
         }
+
+
         stage('Build') {
             steps {
                       dir("${PROJECT_NAME}") {
@@ -25,6 +27,24 @@ pipeline {
 		      
             }
         }
+
+
+        stage('ECR') {
+            steps {
+              script {
+                      if (sh "aws ecr describe-repositories |grep ${PROJECT_NAME} ." == 'master') {
+                         echo "111111111111111"
+                     } else {
+                         echo "222222222222222"
+                       } 
+                     }
+                  }
+
+            }
+        }
+
+
+
         stage('Deploy') {
             steps {
                      dir("${PROJECT_NAME}") {
