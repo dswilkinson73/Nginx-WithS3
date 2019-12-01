@@ -29,9 +29,7 @@ pipeline {
             steps {
                      dir("${PROJECT_NAME}") {
                      echo "Uploading ${PROJECT_NAME} to AWS"
-
                      sh "aws ecr describe-repositories --repository-names ${PROJECT_NAME} || aws ecr create-repository --repository-name ${PROJECT_NAME}"
-
                      sh "aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION} | sh"
                      sh "docker tag jenkins-with-tools:latest ${REPOSITORY_ADDRESS}/${PROJECT_NAME}:latest"
                      sh "docker push $REPOSITORY_ADDRESS/${PROJECT_NAME}"
