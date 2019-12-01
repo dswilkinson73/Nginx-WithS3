@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 REPOSITORY_ADDRESS = "${AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com"
-PROJECT_NAME = "Nginx-WithS3"
+PROJECT_NAME = "nginx-with-s3"
 
 pipeline {
     agent any
