@@ -16,8 +16,6 @@ pipeline {
                   }
             }
         }
-
-
         stage('Build') {
             steps {
                       dir("${PROJECT_NAME}") {
@@ -27,28 +25,15 @@ pipeline {
 		      
             }
         }
-
-
-        stage('ECR') {
-            steps {
-              script {
-                      if (sh "aws ecr describe-repositories |grep ${PROJECT_NAME}" == 'master') {
-                         echo "111111111111111"
-                     } else {
-                         echo "222222222222222"
-                       } 
-                     }
-                  }
-
-            }
-        }
-
-
-
         stage('Deploy') {
             steps {
                      dir("${PROJECT_NAME}") {
                      echo "Uploading ${PROJECT_NAME} to Docker Hub"
+sh '''#!/usr/bin/env bash
+                     if [[ aws ecr describe-repositories --quere 'repositories[?repositoryName==nginx-with-s3'].repositoryUri' --output text) -lt 1 ]]; then
+aws ecr create-repository --repository-name nginx-with-s3;
+fi
+'''
                      sh "aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION} | sh"
                      sh "aws ecr create-repository --repository-name ${PROJECT_NAME}"
                      sh "docker tag jenkins-with-tools:latest ${REPOSITORY_ADDRESS}/${PROJECT_NAME}:latest"
